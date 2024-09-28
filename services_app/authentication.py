@@ -11,7 +11,7 @@ class MiddlewareUserAuthentication(BaseAuthentication):
         if not user_data:
             raise AuthenticationFailed("User data not available")
 
-        # request.user = user_data
+        request.user = user_data
 
         # Use the user_data that was set by the middleware
         return (user_data, None)  # Return user_data and None for authentication backend

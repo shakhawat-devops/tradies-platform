@@ -8,7 +8,6 @@ load_dotenv()
 
 
 class UserData(object):
-    is_authenticated = True
 
     def __init__(self, my_dict):
         for key in my_dict:

@@ -27,4 +27,6 @@ class ServiceSerializer(serializers.ModelSerializer):
         
         validated_data['service_provider'] = request.user.id
 
+        print("Validated Data: ", validated_data)
+
         return super().create(validated_data)
