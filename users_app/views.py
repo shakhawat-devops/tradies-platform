@@ -11,7 +11,7 @@ from rest_framework_simplejwt.serializers import TokenVerifySerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken
 User = get_user_model()
-
+from .permissions import IsOwner
 
 # Create your views here.
 class RegisterView(generics.CreateAPIView): 
@@ -44,21 +44,19 @@ class CustomTokenVerifyView(TokenVerifyView):
             'user': user_data
         })
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes =  [permissions.IsAuthenticated, IsOwner]
-#     def get_queryset(self):
-#         # Ensure that the user can only see their own profile
-#         return User.objects.filter(id=self.request.user.id)
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes =  [permissions.IsAuthenticated, IsOwner]
+    def get_queryset(self):
+        # Ensure that the user can only see their own profile
+        return User.objects.filter(id=self.request.user.id)
 
-#     def perform_update(self, serializer):
-#         # Ensure that users can only update their own profile
-#         serializer.save(user=self.request.user)
+    def perform_update(self, serializer):
+        # Ensure that users can only update their own profile
+        serializer.save(user=self.request.user)
 
 
-# queryset = User.objects.all()
-#     serializer_class = UserSerializer
 # class ServiceViewSet(viewsets.ModelViewSet):
 #     queryset = Service.objects.all()
 #     serializer_class = ServiceSerializer    
